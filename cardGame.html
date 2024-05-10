@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>cardGame</title>
+    <style>
+        .frontCard, .backCard {
+            width: 100px;
+            height: 150px;
+        }
+        #timerArea {
+            font-size: 50px;
+        }
+        
+        body {
+            background-image: url('img/xpBackGround.jpg'); /* 배경 이미지의 경로를 넣어주세요 */
+            background-size: cover; /* 이미지를 화면에 꽉 채우도록 설정 */
+            background-repeat: no-repeat; /* 배경 이미지 반복 방지 */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="timerArea">
+
+    </div>
+    <div id="buttons">
+        <button id="hide" onclick="allBack()">뒤집기</button>
+        <button id="show" onclick="allFront()">보이기</button>
+        <button id="shuffle" onclick="shuffle()">섞기</button>
+        <button id="hint" onclick="hint()">힌트</button>
+        <button id="start" onclick="timerOnOff()">시작</button>
+        <button id="toMain"><a href="cardGameMain.html">메인</a></button>
+    </div>
+    <br><br>
+    <div id="cardArea"></div>
+
+    <script>
+        let cardArea = document.getElementById("cardArea");
+        let timerArea = document.getElementById("timerArea");
+        let startButton = document.getElementById("start");
+        let frontCards = [];
+        let backCards = [];
+        let frontCardsRec = [];
+        let backCardsRec = [];
+        let playTime = 0;
+        let playOnOff = false;
+        let timerInterval;
+
+        function output() { // DOM의 cardArea에 카드 배열들을 출력
+            for (let i = 0; i < backCards.length; i++) {
+                cardArea.appendChild(backCards[i]);
+            }
+        }
+
+        function update() { // DOM의 cardArea에 바뀐 배열을 업데이트
+            cardArea.innerHTML = "";
+
+            output();
+        }
+
+        window.onload = function () {
+
+            for (let i = 0; i < 13; i++) { // 앞면 카드배열에 다이아카드 추가
+                let frontCard = document.createElement("img");
+                frontCard.className = "frontCard";
+                frontCard.alt = i;
+                frontCard.id = i;
+                frontCard.src = "card_img\\card_img\\" + i + ".png";
+                frontCards.push(frontCard);
+            }
+
+            for (let i = 0; i < 13; i++) { // 앞면 카드배열에 클로버카드 추가
+                let frontCard = document.createElement("img");
+                frontCard.className = "frontCard";
+                frontCard.alt = (i + 13);
+                frontCard.id = (i * -1);
+                frontCard.src = "card_img\\card_img\\" + (i + 13) + ".png";
+                frontCards.push(frontCard);
+            }
+
+            for (let i = 0; i < 26; i++) { // 뒷면 카드배열에 뒷면 카드 추가
+                let backCard = document.createElement("img");
+                backCard.className = "backCard";
+                backCard.alt = i;
+                backCard.onclick = function () {
+                    cardClick(this);
+                };
+                backCard.src = "card_img\\card_img\\back.png";
+                backCards.push(backCard);
+            }
+            output();
+            createRec();
+            timerArea.innerHTML = playTime;
+
+        }
+
+        function allBack() {
+            for (let i = 0; i < backCards.length; i++) {
+                if (frontCards[i].className === "backCard")
+                    flip(frontCards[i]);
+            }
+            createRec();
+        }
+
+        function allFront() {
+            for (let i = 0; i < backCards.length; i++) {
+                if (backCards[i].className === "backCard")
+                    flip(backCards[i]);
+            }
+            createRec();
+        }
+
+        function shuffle() {
+            if (frontCardNum() % 2 === 0) {
+                for (let i = 0; i < frontCards.length; i++) {
+                    if (frontCards[i].className === "frontCard") {
+                        let tmp;
+                        let random = Math.floor(Math.random() * (frontCards.length));
+                        if (frontCards[random].className === "frontCard") {
+                            tmp = frontCards[i];
+                            frontCards[i] = frontCards[random];
+                            frontCards[random] = tmp;
+                        }
+                    }
+                }
+                update();
+                createRec();
+            }
+        }
+
+        function hint() {
+            if (frontCardNum() % 2 === 0) {
+                allFront();
+                setTimeout(function () {
+                    frontCards = frontCardsRec[1].slice();
+                    backCards = backCardsRec[1].slice();
+                    createRec();
+                    update();
+                }, 500)
+            }
+
+        }
+
+        function timerOnOff() { // 숫자가 초마다 1씩 증가, 변수가 true면 타이머 실행 false면 중단
+            playOnOff = !playOnOff;
+            if (playOnOff) {
+                timerInterval = setInterval(function () {
+                    playTime++;
+                    timerArea.innerHTML = "";
+                    timerArea.innerHTML = playTime ;
+                }, 1000)
+                startButton.innerHTML = "";
+                startButton.innerHTML = "정지";
+            } else {
+                clearInterval(timerInterval);
+                startButton.innerHTML = "";
+                startButton.innerHTML = "시작";
+            }
+        }
+
+        function createRec() { // 가장 최근 기록이 0번째 그 전 기록은 1번째
+            if (!(frontCardsRec[1] === undefined))
+                frontCardsRec[2] = frontCardsRec[1].slice();
+            if (!(frontCardsRec[0] === undefined)) // 기록배열의 0번째가 차있으면
+                frontCardsRec[1] = frontCardsRec[0].slice();
+            frontCardsRec[0] = frontCards.slice();
+            if (!(backCardsRec[1] === undefined))
+                backCardsRec[2] = backCardsRec[1].slice();
+            if (!(backCardsRec[0] === undefined)) {
+                backCardsRec[1] = backCardsRec[0].slice();
+            }
+            backCardsRec[0] = backCards.slice();
+        }
+
+        function flip(card) { // 카드를 뒤집는 함수
+            idx = parseInt(card.alt, 10);
+            let tmp = frontCards[idx];
+            frontCards[idx] = backCards[idx];
+            backCards[idx] = tmp;
+            update();
+        }
+
+        function frontCardNum() {
+            let cnt = 0;
+            for (let i = 0; i < backCards.length; i++) {
+                if (backCards[i].className === "frontCard")
+                    cnt++;
+            }
+            return cnt;
+        }
+
+        function rightAnswerCheck() { // 같은 카드를 뒤집었다면 0을 반환
+            let point = 0;
+            for (i = 0; i < backCards.length; i++) {
+                if (backCards[i].className === "frontCard") {
+                    point += parseInt(backCards[i].id, 10);
+                }
+
+            }
+            return point;
+        }
+
+        function onclickRemove() { // onclick 해제
+            for (let i = 0; i < backCards.length; i++) {
+                if (backCards[i].className === "backCard")
+                    backCards[i].onclick = null;
+                if (frontCards[i].className === "backCard")
+                    frontCards[i].onclick = null;
+            }
+        }
+
+        function onclickCreate() { // onclick 다시 생성
+            for (let i = 0; i < backCards.length; i++) {
+                if (backCards[i].className === "backCard") // 뒷면 카드에만 onclick이 적용되도록 조건
+                    backCards[i].onclick = function () {
+                        cardClick(this);
+                    }
+                if (frontCards[i].className === "backCard")
+                    frontCards[i].onclick = function () {
+                        cardClick(this);
+                    }
+            }
+        }
+
+        function cardClick(card) { // 카드를 클릭했을 때
+
+            flip(card); // 카드 뒤집기
+
+            createRec(); // 이전 카드배열 내용 기록(되돌아 가기 위함)
+
+            if (frontCardNum() % 2 === 0) { // 카드 중 앞면 카드가 짝수개 일 때 마다
+
+                if (!(rightAnswerCheck() === 0)) {
+                    update();
+                    onclickRemove();
+                    setTimeout(function () {
+                        frontCards = frontCardsRec[2].slice();
+                        backCards = backCardsRec[2].slice();
+                        update();
+                        createRec();
+                    }, 200)
+                    setTimeout(function () {
+                        onclickCreate();
+                    }, 200)
+
+                }
+            }
+
+            if (frontCardNum() === 26) { // 클릭해서 뒤집은 카드가 전부 앞면일때
+                update();
+                setTimeout(function () {
+                    window.alert("축하합니다. 성공하셨습니다.");
+                }, 200)
+            }
+        }
+
+    </script>
+</body>
+
+</html>

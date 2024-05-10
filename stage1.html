@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .frontCard, .backCard {
+            width: 100px;
+            height: 150px;
+        }
+        
+        #scoreBorder {
+            width: 100%;
+            display: flex;
+            
+        }
+
+        #remainingTimeSpan, #remainingChanceSpan {
+            flex: 1; /* 자식 요소가 동일한 너비를 가지도록 설정 */
+        }
+
+        body {
+            background-image: url('img/xpBackGround.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreBorder">
+        
+        <span id="remainingTimeSpan">
+            <h1>남은시간 <a id="time"></a></h1>
+        </span>
+        
+        <span id="remainingChanceSpan">
+            <h1>힌트 <a id="chance"></a></h1>
+        </span>
+    </div>
+    <button id="hint" onclick="hint(), useHint()">힌트</button>
+    <br><br>
+    <div id="cardArea">
+        
+    </div>
+
+    <h1><a href="cardGameMain.html">메인화면으로 돌아가기</a></h1>
+
+    <script src="js/common.js"></script>
+
+    <script>
+
+        let remainingChance = 3;
+        let remainingTime = 80;
+    
+        function cardClick(card) { // 카드를 클릭했을 때
+
+            flip(card); // 카드 뒤집기
+
+            createRec(); // 이전 카드배열 내용 기록(되돌아 가기 위함)
+
+            if (frontCardNum() % 2 === 0) { // 카드 중 앞면 카드가 짝수개 일 때 마다
+
+                if (!(rightAnswerCheck() === 0)) {
+                    update();
+                    onclickRemove();
+                    setTimeout(function () {
+                        frontCards = frontCardsRec[2].slice();
+                        backCards = backCardsRec[2].slice();
+                        update();
+                        createRec();
+                    }, 200)
+                    setTimeout(function () {
+                        onclickCreate();
+                    }, 200)
+
+                }
+            }
+
+            if (frontCardNum() === 26) { // 클릭해서 뒤집은 카드가 전부 앞면일때
+                update();
+                clearInterval(remainTimerInterval);
+                setTimeout(function () {
+                    window.alert("축하합니다. 성공하셨습니다.");
+                }, 200)
+            }
+        }
+
+        window.onload = function () {
+            frontCardsCreate();
+            backCardsCreate();
+            output();
+            shuffle();
+            shuffle();
+            createRec();
+            chanceObj.innerHTML = remainingChance;
+            timeObj.innerHTML = remainingTime;
+            startTimer();
+
+        }
+
+
+    </script>
+</body>
+</html>
