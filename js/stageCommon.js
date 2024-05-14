@@ -224,3 +224,42 @@ function hintOnclickCreate() {
     }
 }
 
+function cardClick(card) { // 카드를 클릭했을 때
+
+    flip(card); // 카드 뒤집기
+
+
+    createRec(); // 이전 카드배열 내용 기록(되돌아 가기 위함)
+
+    if (frontCardNum() % 2 === 0) { // 카드 중 앞면 카드가 짝수개 일 때 마다
+
+        if (!(rightAnswerCheck() === 0)) {
+            update();
+            onclickRemove();
+            setTimeout(function () {
+                frontCards = frontCardsRec[2].slice();
+                backCards = backCardsRec[2].slice();
+                update();
+                createRec();
+                shuffleCnt++;
+                wrongCount.innerHTML = "";
+                wrongCount.innerHTML = shuffleCnt;
+                if(shuffleCnt % 5 === 0)
+                    shuffle();
+            }, 200)
+            setTimeout(function () {
+                onclickCreate();
+            }, 200)
+
+        }
+    }
+
+    if (frontCardNum() === 26) { // 클릭해서 뒤집은 카드가 전부 앞면일때
+        update();
+        clearInterval(remainTimerInterval);
+        setTimeout(function () {
+            window.alert("축하합니다. 성공하셨습니다.");
+        }, 200)
+    }
+}
+
