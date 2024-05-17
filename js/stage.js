@@ -114,12 +114,13 @@ function startTimer() {
     remainTimerOnOff = !remainTimerOnOff
     if (remainTimerOnOff) {
         remainTimerInterval = setInterval(function () {
-            remainingTime--;
-            timeObj.innerHTML = "";
-            timeObj.innerHTML = remainingTime;
-            if(remainingTime === -1){
+            if(remainingTime === 0){
                 clearInterval(remainTimerInterval);
                 window.alert("실패T_T");
+            } else {
+                remainingTime--;
+                timeObj.innerHTML = "";
+                timeObj.innerHTML = remainingTime;
             }
         },1000)
     }
