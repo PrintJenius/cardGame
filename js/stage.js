@@ -12,9 +12,7 @@ let timerInterval;
 let remainTimerInterval;
 let chanceObj = document.getElementById("chance");
 let timeObj = document.getElementById("time");
-let wrongCount = document.getElementById("wrongCount");
 let remainTimerOnOff = false;
-let shuffleCnt = 0;
 
 function output() {
     for (let i = 0; i < backCards.length; i++) {
@@ -242,11 +240,6 @@ function cardClick(card) { // 카드를 클릭했을 때
                 backCards = backCardsRec[2].slice();
                 update();
                 createRec();
-                shuffleCnt++;
-                wrongCount.innerHTML = "";
-                wrongCount.innerHTML = shuffleCnt;
-                if(shuffleCnt % 5 === 0)
-                    shuffle();
             }, 200)
             setTimeout(function () {
                 onclickCreate();
