@@ -25,7 +25,7 @@
     <div id="scoreBorder">
         
         <span id="remainingTimeSpan">
-            <h1>남은시간 <a id="time"></a></h1>
+            <h1 style="color: red">남은시간 <a id="time"></a></h1>
         </span>
 
         <span id="wrongCountSpan">
@@ -33,7 +33,7 @@
         </span>
         
         <span id="remainingChanceSpan">
-            <h1>힌트 <a id="chance"></a></h1>
+            <h1 style="color: red;">힌트 <a id="chance"></a></h1>
         </span>
 
     </div>
@@ -63,8 +63,8 @@
             chanceObj.innerHTML = remainingChance;
             timeObj.innerHTML = remainingTime;
             wrongCount.innerHTML = shuffleCnt;
-            window.alert("5번 틀릴때마다 카드가 섞입니다.");
             startTimer();            
+            window.alert("5번 틀릴때마다 카드가 섞입니다.");
 
         }
         
