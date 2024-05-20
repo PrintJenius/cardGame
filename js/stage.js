@@ -115,6 +115,7 @@ function startTimer() {
             if(remainingTime === 0){
                 clearInterval(remainTimerInterval);
                 window.alert("실패T_T");
+                onclickRemove(); // 더 이상 카드를 뒤집을 수 없게
             } else {
                 remainingTime--;
                 timeObj.innerHTML = "";
