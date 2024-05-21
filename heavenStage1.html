@@ -17,13 +17,13 @@
             <h1>힌트 <a id="chance"></a></h1>
         </span>
     </div>
-    <button id="hint" onclick="hint(), useHint()">힌트</button>
+    <button id="hint" onclick="useHint()">힌트</button>
     <br><br>
     <div id="cardArea">
         
     </div>
 
-    <h1><a href="cardGameMain.html">메인화면으로 돌아가기</a></h1>
+    <h1><a href="heavenMain.html">메인화면으로 돌아가기</a></h1>
 
     <script src="js/stage.js"></script>
 
@@ -32,19 +32,8 @@
         let remainingChance = 3;
         let remainingTime = 80;
 
-        window.onload = function () {
-            frontCardsCreate();
-            backCardsCreate();
-            output();
-            shuffle();
-            shuffle();
-            createRec();
-            chanceObj.innerHTML = remainingChance;
-            timeObj.innerHTML = remainingTime;
-            startTimer();
-
-        }
-
+        chanceObj.innerHTML = remainingChance;
+        timeObj.innerHTML = remainingTime;
 
     </script>
 </body>
