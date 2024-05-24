@@ -102,10 +102,10 @@ function useHint() {
             visibleDeck = visibleDeckRec[1].slice();
             recordCardState();
             displayCardsUpdate();
-        }, 500)
+        }, 1000)
         setTimeout(function () {
             hintOnclickCreate();
-        }, 500)
+        }, 1000)
     remainingChance--;
     chanceObj.innerHTML = "";
     chanceObj.innerHTML = remainingChance;
