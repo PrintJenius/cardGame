@@ -4,27 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/stage.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/heavenStage.css">
 </head>
 <body>
-    <div id="scoreBorder">
-        
+    <header>
         <span id="remainingTimeSpan">
             <h1>남은시간 <a id="time"></a></h1>
         </span>
-        
         <span id="remainingChanceSpan">
             <h1>힌트 <a id="chance"></a></h1>
         </span>
-    </div>
-    <button id="hint" onclick="useHint()">힌트</button>
-    <br><br>
-    <div id="cardArea">
-        
-    </div>
-
-    <h1><a href="heavenMain.html">메인화면으로 돌아가기</a></h1>
-
+         <button id="hint" onclick="useHint()">힌트</button>
+    </header>
+    <section>
+        <div class="wrapper">
+            <div id="cardArea">
+                
+            </div>
+            <h1><a href="heavenMain.html">메인화면으로 돌아가기</a></h1>
+        </div>
+    </section>
     <script src="js/stage.js"></script>
 
     <script>

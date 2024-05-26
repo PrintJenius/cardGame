@@ -4,26 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/stage.css">
-    <style>
-
-        body {
-            background-image: url('img/hell.jpg');
-        }
-
-        #wrongCountSpan {
-            flex: 1; /* 자식 요소가 동일한 너비를 가지도록 설정 */
-        }
-
-        #wrongCount {
-            color: red;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/hellStage.css">
 </head>
 <body>
-    <div id="scoreBorder">
-        
+    <header>
         <span id="remainingTimeSpan">
             <h1 style="color: red">남은시간 <a id="time"></a></h1>
         </span>
@@ -35,16 +21,16 @@
         <span id="remainingChanceSpan">
             <h1 style="color: red;">힌트 <a id="chance"></a></h1>
         </span>
-
-    </div>
-    <button id="hint" onclick="useHint()">힌트</button>
-    <br><br>
-    <div id="cardArea">
-        
-    </div>
-
-    <h1><a href="hellMain.html">메인화면으로 돌아가기</a></h1>
-
+        <button id="hint" onclick="useHint()">힌트</button>
+    </header>
+    <section>
+        <div class="wrapper">
+            <div id="cardArea">
+                
+            </div>
+            <h1><a href="hellMain.html">메인화면으로 돌아가기</a></h1>
+        </div>
+    </section>
     <script src="js/stage.js"></script>
 
     <script>

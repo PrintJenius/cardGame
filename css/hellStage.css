@@ -1,0 +1,37 @@
+.wrapper {
+  width: 70%;
+  min-height: 100vh; /* 뷰포트의 전체 높이를 차지하도록 설정 */
+  background-color: rgba(255, 0, 0, 0.1);
+  margin: 0 auto; /* 수평으로 가운데 정렬 */
+  display: flex;
+  align-items: center; /* 세로로 가운데 정렬 (flexbox 사용) */
+  justify-content: space-evenly; /* 가로로 가운데 정렬 (flexbox 사용) */
+  flex-wrap: wrap;
+}
+
+.frontCard, .backCard {
+    width: 100px;
+    height: 150px;
+}
+
+#remainingTimeSpan, #remainingChanceSpan {
+    flex: 1; /* 자식 요소가 동일한 너비를 가지도록 설정 */
+}
+
+body {
+    background-image: url('../img/hell.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#time {
+    color: red;
+}
+
+#wromgCountSpan {
+    flex: 1;
+}
+
+#wrongCount {
+    color: red;
+}
