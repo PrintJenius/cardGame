@@ -28,3 +28,7 @@ body {
   margin: 30px;
 }
 
+.locked {
+  opacity: 0.5;
+  pointer-events: none;
+}

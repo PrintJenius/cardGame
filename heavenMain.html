@@ -16,25 +16,35 @@
         <div class="wrapper">
             <h1>스테이지</h1>
             <div class="stages">
-            <a href="heavenStage1.html"><img src="img/1.jpg" class="stageImg"></a>
-            <a href="heavenStage2.html"><img src="img/2.jpg" class="stageImg"></a>
-            <a href="heavenStage3.html"><img src="img/3.jpg" class="stageImg"></a>
-            <a href="heavenStage4.html"><img src="img/4.jpg" class="stageImg"></a>
-            <a href="heavenStage5.html"><img src="img/5.jpg" class="stageImg"></a>
+            <a href="heavenStage1.html" class="stageLink"><img src="img/1.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/2.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/3.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/4.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/5.jpg" class="stageImg"></a>
             </div>
             <div class="stages">
-            <a href="heavenStage6.html"><img src="img/6.jpg" class="stageImg"></a>
-            <a href="heavenStage7.html"><img src="img/7.jpg" class="stageImg"></a>
-            <a href="heavenStage8.html"><img src="img/8.jpg" class="stageImg"></a>
-            <a href="heavenStage9.html"><img src="img/9.jpg" class="stageImg"></a>
-            <a href="heavenStage10.html"><img src="img/10.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/6.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/7.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/8.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/9.jpg" class="stageImg"></a>
+            <a href="#" class="stageLink locked"><img src="img/10.jpg" class="stageImg"></a>
             </div>
         </div>
     </section>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        // 로컬 저장소에서 스테이지 진행 상황을 로드
+        const stages = document.querySelectorAll('.stageLink');
+        const stageProgress = JSON.parse(localStorage.getItem('stageProgress')) || [];
 
-    
-    
-    
+        // 각 스테이지의 상태를 업데이트
+        stages.forEach((stage, index) => {
+            if (index < stageProgress.length && stageProgress[index]) {
+                stage.classList.remove('locked');
+                stage.href = `heavenStage${index + 1}.html`;
+            }
+        });
+        });
+    </script>
 </body>
 </html>

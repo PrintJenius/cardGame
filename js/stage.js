@@ -235,8 +235,28 @@ function cardClick(card) { // 카드를 클릭했을 때
         clearInterval(timeInterval);
         setTimeout(function () {
             window.alert("축하합니다. 성공하셨습니다.");
+            clearStage();
         }, 200)
     }
+}
+
+function getCurrentStageFromURL() {
+    // 현재 URL을 가져옴
+    const url = window.location.href;
+    // "heavenStage" 다음의 숫자를 추출
+    const stageNumber = url.match(/heavenStage(\d+)/);
+
+    return stageNumber ? parseInt(stageNumber[1]) : 1;
+}
+
+function clearStage() {
+    const currentStage = getCurrentStageFromURL(); // 현재 스테이지 번호, 필요에 따라 동적으로 설정
+    const stageProgress = JSON.parse(localStorage.getItem('stageProgress')) || [];
+    if (!stageProgress[currentStage]) {
+        stageProgress[currentStage] = true;
+        localStorage.setItem('stageProgress', JSON.stringify(stageProgress));
+    }
+    
 }
 
 hiddenDeckCreate();
