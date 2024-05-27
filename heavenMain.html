@@ -10,25 +10,27 @@
 </head>
 <body>
     <header>
-        <h1 class="title">카드게임</h1><a href="hellMain.html"> 지옥</a>  
+        <h1 class="title">카드게임</h1> <button class="resetButton" onclick="resetProgress()">초기화</button>
     </header>
     <section>
         <div class="wrapper">
             <div class="stages">
-            <a href="heavenStage1.html" class="stageLink"><img src="img/1.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/2.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/3.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/4.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/5.jpg" class="stageImg"></a>
+                <a href="heavenStage1.html" class="stageLink"><img src="img/1.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/2.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/3.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/4.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/5.jpg" class="stageImg"></a>
             </div>
             <div class="stages">
-            <a href="#" class="stageLink locked"><img src="img/6.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/7.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/8.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/9.jpg" class="stageImg"></a>
-            <a href="#" class="stageLink locked"><img src="img/10.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/6.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/7.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/8.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/9.jpg" class="stageImg"></a>
+                <a href="#" class="stageLink locked"><img src="img/10.jpg" class="stageImg"></a>
             </div>
+            <img id="hellGate" class="hellGate" src="img/hellGate.jpg">
         </div>
+        
     </section>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -43,7 +45,24 @@
                 stage.href = `heavenStage${index + 1}.html`;
             }
         });
+
+        // -1 하는 이유는 0번째 인덱스가 null이기 때문
+        const allStagesUnlocked = stageProgress.length - 1 === stages.length;
+
+        // 모든 스테이지가 잠금 해제되었으면 문을 활성화
+        const hellGate = document.getElementById('hellGate');
+        if (allStagesUnlocked) {
+            hellGate.classList.add('active');
+            hellGate.onclick = function () {
+                window.location.href = 'hellMain.html';
+            };
+        }
         });
+
+        function resetProgress() {
+            localStorage.removeItem('stageProgress');
+            window.location.reload();
+        }
     </script>
 </body>
 </html>
